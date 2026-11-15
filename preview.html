@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insite Lab — GitHub Organization</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400&family=Hanken+Grotesk:wght@300;400;500&family=DM+Mono:wght@300;400&family=Noto+Serif+SC:wght@400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           COBALT GRID SYSTEM — Insite Lab Profile
+           Inspired by Japanese trend report aesthetics
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            /* Paper */
+            --paper: #F0EBDE;
+            --paper-deep: #E6E0CE;
+
+            /* Ink */
+            --ink: #1F2BE0;
+            --ink-10: rgba(31, 43, 224, 0.10);
+            --ink-18: rgba(31, 43, 224, 0.18);
+            --ink-40: rgba(31, 43, 224, 0.40);
+
+            /* Grid */
+            --grid-size: 24px;
+            --frame-weight: 1.5px;
+
+            /* Typography */
+            --font-display: 'Newsreader', 'Noto Serif SC', Georgia, serif;
+            --font-body: 'Hanken Grotesk', -apple-system, sans-serif;
+            --font-mono: 'DM Mono', 'SF Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--ink);
+            background-color: var(--paper);
+            /* Grid pattern - always visible */
+            background-image:
+                linear-gradient(var(--ink-10) 1px, transparent 1px),
+                linear-gradient(90deg, var(--ink-10) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FRAME SYSTEM — Top and bottom borders for each section
+           ═══════════════════════════════════════════════════════════════ */
+
+        .framed {
+            position: relative;
+            padding: var(--grid-size) 0;
+        }
+
+        .framed::before,
+        .framed::after {
+            content: '';
+            position: absolute;
+            left: var(--grid-size);
+            right: var(--grid-size);
+            height: var(--frame-weight);
+            background: var(--ink);
+        }
+
+        .framed::before { top: 0; }
+        .framed::after { bottom: 0; }
+
+        /* ═══════════════════════════════════════════════════════════════
+           LAYOUT
+           ═══════════════════════════════════════════════════════════════ */
+
+        .canvas {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--grid-size) * 2) var(--grid-size);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--grid-size);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--grid-size);
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: calc(var(--grid-size) / 2);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           TYPOGRAPHY
+           ═══════════════════════════════════════════════════════════════ */
+
+        .display-xl {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(72px, 12vw, 180px);
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+        }
+
+        .display-lg {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(48px, 8vw, 96px);
+            line-height: 1;
+        }
+
+        .display-md {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(32px, 5vw, 56px);
+            line-height: 1.1;
+        }
+
+        .label {
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+            font-weight: 300;
+            letter-spacing: 0.04em;
+        }
+
+        .mono-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.08em;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════════════════════════════ */
+
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-title {
+            margin-bottom: var(--grid-size);
+        }
+
+        .hero-subtitle {
+            display: flex;
+            align-items: center;
+            gap: var(--grid-size);
+            padding-top: var(--grid-size);
+            border-top: var(--frame-weight) solid var(--ink);
+        }
+
+        .hero-subtitle .divider {
+            width: 60px;
+            height: var(--frame-weight);
+            background: var(--ink);
+        }
+
+        /* Scanning line decoration */
+        .scanline {
+            position: absolute;
+            right: var(--grid-size);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 240px;
+            opacity: 0.6;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECTION HEADER
+           ═══════════════════════════════════════════════════════════════ */
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: var(--grid-size) 0;
+            border-bottom: var(--frame-weight) solid var(--ink);
+            margin-bottom: calc(var(--grid-size) * 2);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.1;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           CAPABILITY BLOCKS
+           ═══════════════════════════════════════════════════════════════ */
+
+        .capability {
+            padding: var(--grid-size);
+            border: var(--frame-weight) solid var(--ink);
+            position: relative;
+            transition: background-color 280ms ease;
+        }
+
+        .capability:hover {
+            background-color: var(--ink);
+            color: var(--paper);
+        }
+
+        .capability:hover .capability-icon {
+            filter: invert(1);
+        }
+
+        .capability-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: var(--grid-size);
+            transition: filter 280ms ease;
+        }
+
+        .capability-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .capability-desc {
+            font-size: 13px;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        .capability-number {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            opacity: 0.5;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           PROJECT CARDS
+           ═══════════════════════════════════════════════════════════════ */
+
+        .project {
+            border: var(--frame-weight) solid var(--ink);
+            position: relative;
+        }
+
+        .project-preview {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: var(--paper-deep);
+            border-bottom: var(--frame-weight) solid var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Pixelated pattern for project preview placeholder */
+        .pixel-pattern {
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(45deg, var(--ink-18) 25%, transparent 25%),
+                linear-gradient(-45deg, var(--ink-18) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, var(--ink-18) 75%),
+                linear-gradient(-45deg, transparent 75%, var(--ink-18) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        .project-info {
+            padding: var(--grid-size);
+        }
+
+        .project-name {
+            font-family: var(--font-display);
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .project-desc {
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            opacity: 0.75;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 16px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: var(--ink);
+            opacity: 0.6;
+        }
+
+        .project-tag {
+            position: absolute;
+            top: var(--grid-size);
+            left: var(--grid-size);
+            background: var(--ink);
+            color: var(--paper);
+            padding: 4px 10px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           TECH STACK — Pixel mosaic style
+           ═══════════════════════════════════════════════════════════════ */
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: calc(var(--grid-size) / 2);
+        }
+
+        .tech-item {
+            aspect-ratio: 1;
+            border: var(--frame-weight) solid var(--ink);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            transition: all 280ms ease;
+        }
+
+        .tech-item:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .tech-item:hover img {
+            filter: invert(1) brightness(2);
+        }
+
+        .tech-item img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 6px;
+            transition: filter 280ms ease;
+        }
+
+        .tech-item span {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           STATS — Pixel bar chart style
+           ═══════════════════════════════════════════════════════════════ */
+
+        .stats-row {
+            display: flex;
+            gap: calc(var(--grid-size) * 2);
+            align-items: flex-end;
+            padding: calc(var(--grid-size) * 2) 0;
+        }
+
+        .stat-block {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: clamp(48px, 8vw, 80px);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Pixel bar visualization */
+        .pixel-bar {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 2px;
+            width: 24px;
+            margin: 0 auto 12px;
+        }
+
+        .pixel-bar-segment {
+            width: 100%;
+            aspect-ratio: 1;
+            background: var(--ink);
+        }
+
+        .pixel-bar-segment.empty {
+            background: transparent;
+            border: 1px solid var(--ink-18);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════ */
+
+        .footer {
+            margin-top: calc(var(--grid-size) * 3);
+            padding: var(--grid-size);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--grid-size);
+            border-top: var(--frame-weight) solid var(--ink);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            color: var(--ink);
+            text-decoration: none;
+            transition: opacity 280ms ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.6;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           PAGE NUMBER
+           ═══════════════════════════════════════════════════════════════ */
+
+        .page-number {
+            position: fixed;
+            bottom: 20px;
+            right: 24px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--ink);
+            opacity: 0.5;
+            z-index: 100;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           DECORATIVE ELEMENTS
+           ═══════════════════════════════════════════════════════════════ */
+
+        .corner-mark {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: var(--frame-weight) solid var(--ink);
+        }
+
+        .corner-mark.tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+        .corner-mark.tr { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+        .corner-mark.bl { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+        .corner-mark.br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+        /* Stepped pixel scanline */
+        .stepped-line {
+            width: 100%;
+            height: 8px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--ink) 0px,
+                var(--ink) 4px,
+                transparent 4px,
+                transparent 8px
+            );
+            opacity: 0.3;
+            margin: var(--grid-size) 0;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           MARQUEE
+           ═══════════════════════════════════════════════════════════════ */
+
+        .marquee {
+            overflow: hidden;
+            padding: var(--grid-size) 0;
+            border-top: var(--frame-weight) solid var(--ink);
+            border-bottom: var(--frame-weight) solid var(--ink);
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: calc(var(--grid-size) * 2);
+            animation: marquee 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-family: var(--font-display);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .marquee-item::before {
+            content: '●';
+            color: var(--ink);
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           CTA BUTTON
+           ═══════════════════════════════════════════════════════════════ */
+
+        .cta {
+            display: inline-block;
+            padding: 14px 28px;
+            border: var(--frame-weight) solid var(--ink);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            transition: all 280ms ease;
+            position: relative;
+        }
+
+        .cta:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .cta-arrow {
+            margin-left: 8px;
+            transition: transform 280ms ease;
+        }
+
+        .cta:hover .cta-arrow {
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             HERO SECTION
+             ═══════════════════════════════════════════════════════════════ -->
+        <section class="hero framed">
+            <div class="container">
+                <div class="corner-mark tl"></div>
+                <div class="corner-mark tr"></div>
+                <div class="corner-mark bl"></div>
+                <div class="corner-mark br"></div>
+
+                <!-- Decorative scanline SVG -->
+                <svg class="scanline" viewBox="0 0 120 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 0 L60 20 L40 20 L40 40 L80 40 L80 60 L30 60 L30 80 L90 80 L90 100 L50 100 L50 120 L70 120 L70 140 L35 140 L35 160 L85 160 L85 180 L45 180 L45 200 L75 200 L75 220 L60 220 L60 240"
+                          stroke="var(--ink)" stroke-width="1.5" fill="none" opacity="0.4"/>
+                    <rect x="20" y="30" width="8" height="8" fill="var(--ink)" opacity="0.6"/>
+                    <rect x="92" y="70" width="8" height="8" fill="var(--ink)" opacity="0.6"/>
+                    <rect x="15" y="150" width="8" height="8" fill="var(--ink)" opacity="0.6"/>
+                    <rect x="100" y="190" width="8" height="8" fill="var(--ink)" opacity="0.6"/>
+                </svg>
+
+                <!-- Title -->
+                <div class="hero-title">
+                    <h1 class="display-xl">Insite<br>Lab.</h1>
+                </div>
+
+                <!-- Subtitle -->
+                <div class="hero-subtitle">
+                    <span class="label">Open Source Innovation Hub</span>
+                    <span class="divider"></span>
+                    <span class="mono-tag">EST. 2026 / GITHUB</span>
+                </div>
+
+                <!-- Description -->
+                <div style="margin-top: 48px; max-width: 560px;">
+                    <p style="font-size: 15px; line-height: 1.7; opacity: 0.85;">
+                        构建未来技术。我们是一支致力于开源创新的团队，专注于人工智能、云原生基础设施与现代开发者工具。每个项目都是对卓越的探索。
+                    </p>
+                </div>
+
+                <!-- CTA -->
+                <div style="margin-top: 40px; display: flex; gap: 16px;">
+                    <a href="#projects" class="cta">
+                        探索项目 <span class="cta-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             STATS SECTION
+             ═══════════════════════════════════════════════════════════════ -->
+        <section class="framed">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Organization</h2>
+                    <span class="mono-tag">2026.11</span>
+                </div>
+
+                <div class="stats-row">
+                    <!-- Repos -->
+                    <div class="stat-block">
+                        <div class="pixel-bar">
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                        </div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Repositories</div>
+                    </div>
+
+                    <!-- Stars -->
+                    <div class="stat-block">
+                        <div class="pixel-bar">
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                        </div>
+                        <div class="stat-value">1.2K</div>
+                        <div class="stat-label">Total Stars</div>
+                    </div>
+
+                    <!-- Forks -->
+                    <div class="stat-block">
+                        <div class="pixel-bar">
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                        </div>
+                        <div class="stat-value">342</div>
+                        <div class="stat-label">Total Forks</div>
+                    </div>
+
+                    <!-- Contributors -->
+                    <div class="stat-block">
+                        <div class="pixel-bar">
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                            <div class="pixel-bar-segment"></div>
+                        </div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Contributors</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             CAPABILITIES SECTION
+             ═══════════════════════════════════════════════════════════════ -->
+        <section class="framed">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Capabilities</h2>
+                    <span class="mono-tag">WHAT WE DO</span>
+                </div>
+
+                <div class="grid-4">
+                    <!-- AI -->
+                    <div class="capability">
+                        <span class="capability-number">01</span>
+                        <svg class="capability-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="24" cy="24" r="18"/>
+                            <circle cx="24" cy="24" r="8"/>
+                            <line x1="24" y1="6" x2="24" y2="16"/>
+                            <line x1="24" y1="32" x2="24" y2="42"/>
+                            <line x1="6" y1="24" x2="16" y2="24"/>
+                            <line x1="32" y1="24" x2="42" y2="24"/>
+                        </svg>
+                        <h3 class="capability-title">AI Solutions</h3>
+                        <p class="capability-desc">机器学习与NLP模型研发，面向实际场景的智能应用。</p>
+                    </div>
+
+                    <!-- Cloud -->
+                    <div class="capability">
+                        <span class="capability-number">02</span>
+                        <svg class="capability-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 32C7.58 32 4 28.42 4 24C4 19.58 7.58 16 12 16C12.34 16 12.67 16.02 13 16.05C14.91 11.26 19.63 8 25 8C31.63 8 37 13.37 37 20C37 20.34 36.98 20.67 36.95 21C40.34 21.5 43 24.42 43 28C43 32.42 39.42 36 35 36H12V32Z"/>
+                        </svg>
+                        <h3 class="capability-title">Cloud Native</h3>
+                        <p class="capability-desc">Kubernetes编排与微服务架构，弹性扩展的云端基础设施。</p>
+                    </div>
+
+                    <!-- Frontend -->
+                    <div class="capability">
+                        <span class="capability-number">03</span>
+                        <svg class="capability-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="6" y="10" width="36" height="28" rx="2"/>
+                            <line x1="6" y1="18" x2="42" y2="18"/>
+                            <polyline points="16,28 20,24 16,20"/>
+                            <line x1="24" y1="30" x2="32" y2="30"/>
+                        </svg>
+                        <h3 class="capability-title">Modern Web</h3>
+                        <p class="capability-desc">React/Next.js/Vue技术栈，响应式与性能优先的前端工程。</p>
+                    </div>
+
+                    <!-- Infra -->
+                    <div class="capability">
+                        <span class="capability-number">04</span>
+                        <svg class="capability-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="8" y="8" width="32" height="10" rx="1"/>
+                            <rect x="8" y="20" width="32" height="10" rx="1"/>
+                            <rect x="8" y="32" width="32" height="10" rx="1"/>
+                            <circle cx="14" cy="13" r="1.5" fill="currentColor"/>
+                            <circle cx="14" cy="25" r="1.5" fill="currentColor"/>
+                            <circle cx="14" cy="37" r="1.5" fill="currentColor"/>
+                        </svg>
+                        <h3 class="capability-title">Infrastructure</h3>
+                        <p class="capability-desc">Go/Rust高性能服务，DevOps工具链与自动化运维平台。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             MARQUEE
+             ═══════════════════════════════════════════════════════════════ -->
+        <div class="marquee">
+            <div class="marquee-content">
+                <span class="marquee-item">Open Source</span>
+                <span class="marquee-item">Innovation</span>
+                <span class="marquee-item">Community</span>
+                <span class="marquee-item">Excellence</span>
+                <span class="marquee-item">Performance</span>
+                <span class="marquee-item">Security</span>
+                <span class="marquee-item">Open Source</span>
+                <span class="marquee-item">Innovation</span>
+                <span class="marquee-item">Community</span>
+                <span class="marquee-item">Excellence</span>
+                <span class="marquee-item">Performance</span>
+                <span class="marquee-item">Security</span>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             PROJECTS SECTION
+             ═══════════════════════════════════════════════════════════════ -->
+        <section class="framed" id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Projects</h2>
+                    <span class="mono-tag">SELECTED WORK</span>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Project 1 -->
+                    <a href="#" class="project" style="text-decoration: none; color: inherit;">
+                        <div class="project-preview">
+                            <div class="pixel-pattern"></div>
+                            <span class="project-tag">Featured</span>
+                            <div style="position: absolute; font-family: var(--font-display); font-size: 48px; opacity: 0.15;">01</div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-name">Project Alpha</h3>
+                            <p class="project-desc">下一代AI推理框架，针对边缘计算场景优化，支持多模型协同推理。</p>
+                            <div class="project-meta">
+                                <span>⭐ 428</span>
+                                <span>🍴 86</span>
+                                <span>Python</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 2 -->
+                    <a href="#" class="project" style="text-decoration: none; color: inherit;">
+                        <div class="project-preview">
+                            <div class="pixel-pattern"></div>
+                            <span class="project-tag">Featured</span>
+                            <div style="position: absolute; font-family: var(--font-display); font-size: 48px; opacity: 0.15;">02</div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-name">Project Beta</h3>
+                            <p class="project-desc">云原生DevOps工具套件，一站式管理CI/CD、监控与日志聚合。</p>
+                            <div class="project-meta">
+                                <span>⭐ 256</span>
+                                <span>🍴 48</span>
+                                <span>Go</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div style="margin-top: 40px; text-align: center;">
+                    <a href="https://github.com/orgs/Insite-lab/repositories" class="cta">
+                        查看全部项目 <span class="cta-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             TECH STACK SECTION
+             ═══════════════════════════════════════════════════════════════ -->
+        <section class="framed">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Tech Stack</h2>
+                    <span class="mono-tag">TOOLS & LANGUAGES</span>
+                </div>
+
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                        <span>Python</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript">
+                        <span>TypeScript</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go">
+                        <span>Go</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg" alt="Rust">
+                        <span>Rust</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+                        <span>React</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" alt="Vue">
+                        <span>Vue.js</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
+                        <span>Docker</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="K8s">
+                        <span>K8s</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform">
+                        <span>Terraform</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aws/aws-original.svg" alt="AWS">
+                        <span>AWS</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+                        <span>PostgreSQL</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis">
+                        <span>Redis</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             CONTRIBUTING SECTION
+             ═══════════════════════════════════════════════════════════════ -->
+        <section class="framed">
+            <div class="container">
+                <div class="grid-2" style="align-items: center;">
+                    <div>
+                        <h2 class="display-md" style="margin-bottom: 24px;">Join Our<br>Mission.</h2>
+                        <p style="font-size: 14px; line-height: 1.7; opacity: 0.8; margin-bottom: 32px; max-width: 400px;">
+                            我们始终在寻找充满热情的开发者加入我们的使命。无论是修复一个Bug、提交一个Feature，还是参与架构讨论，每一份贡献都至关重要。
+                        </p>
+                        <div style="display: flex; gap: 12px;">
+                            <a href="mailto:contact@insite-lab.com" class="cta">联系我们</a>
+                            <a href="https://github.com/Insite-lab" class="cta" style="background: var(--ink); color: var(--paper);">
+                                GitHub →
+                            </a>
+                        </div>
+                    </div>
+                    <div style="position: relative;">
+                        <!-- QR Code placeholder with pixel style -->
+                        <div style="width: 180px; height: 180px; margin: 0 auto; background: var(--ink); padding: 12px; box-shadow: 4px 4px 0 var(--paper-deep);">
+                            <div style="width: 100%; height: 100%; background: var(--paper); display: flex; align-items: center; justify-content: center;">
+                                <div style="font-family: var(--font-mono); font-size: 10px; text-align: center; color: var(--ink); opacity: 0.6;">
+                                    SCAN TO<br>CONNECT<br><br>
+                                    github.com/<br>Insite-lab
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════════════════════════════ -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="mono-tag">© 2026 INSITE LAB. ALL RIGHTS RESERVED.</div>
+                    <div class="footer-links">
+                        <a href="https://github.com/Insite-lab">GitHub</a>
+                        <a href="mailto:contact@insite-lab.com">Contact</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">Blog</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Page Number -->
+    <div class="page-number">001 / ∞</div>
+
+    <script>
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.capability, .project, .tech-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Stagger animation for grid items
+        document.querySelectorAll('.grid-4 .capability, .tech-grid .tech-item').forEach((el, i) => {
+            el.style.transitionDelay = `${i * 0.05}s`;
+        });
+    </script>
+</body>
+</html>

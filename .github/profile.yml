@@ -1,0 +1,34 @@
+# Organization Profile Configuration
+# This file configures how your organization appears on GitHub
+
+name: Insite Lab
+description: Building the future of technology through open source innovation
+url: https://insite-lab.com
+email: contact@insite-lab.com
+twitter_username: insitelab
+blog: https://insite-lab.com/blog
+
+# Organization settings
+has_organization_projects: true
+has_repository_projects: true
+
+# Public email for contact
+public_email: contact@insite-lab.com
+
+# Company information
+is_verified: false
+company: Insite Lab
+
+# Location (optional)
+# location: Shenzhen, China
+
+# Bio shown on organization page
+bio: |
+  🚀 Open Source Innovation Hub
+  ⚡ Building cutting-edge technology solutions
+  🌟 Community-driven development
+
+# Social links
+social_accounts:
+  - https://twitter.com/insitelab
+  - https://linkedin.com/company/insite-lab

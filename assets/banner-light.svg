@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Light Gradient Background -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="50%" style="stop-color:#f6f8fa"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+
+    <!-- Subtle Glow Effect -->
+    <filter id="subtle-glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Animated Gradient for Text -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0969da">
+        <animate attributeName="stop-color" values="#0969da;#8250df;#cf222e;#0969da" dur="6s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" style="stop-color:#8250df">
+        <animate attributeName="stop-color" values="#8250df;#cf222e;#0969da;#8250df" dur="6s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#cf222e">
+        <animate attributeName="stop-color" values="#cf222e;#0969da;#8250df;#cf222e" dur="6s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#d0d7de" stroke-width="0.5"/>
+    </pattern>
+
+    <!-- Particle -->
+    <circle id="particle" r="2" fill="#0969da" opacity="0.4"/>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="300" fill="url(#bgGradient)"/>
+  <rect width="1200" height="300" fill="url(#grid)" opacity="0.5"/>
+
+  <!-- Animated Particles -->
+  <g>
+    <use href="#particle" x="100" y="50">
+      <animate attributeName="cy" values="50;250;50" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.1;0.4" dur="8s" repeatCount="indefinite"/>
+    </use>
+    <use href="#particle" x="300" y="200">
+      <animate attributeName="cy" values="200;50;200" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.5;0.3" dur="6s" repeatCount="indefinite"/>
+    </use>
+    <use href="#particle" x="500" y="100">
+      <animate attributeName="cy" values="100;250;100" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.2;0.4" dur="7s" repeatCount="indefinite"/>
+    </use>
+    <use href="#particle" x="700" y="150">
+      <animate attributeName="cy" values="150;50;150" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="5s" repeatCount="indefinite"/>
+    </use>
+    <use href="#particle" x="900" y="80">
+      <animate attributeName="cy" values="80;220;80" dur="9s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.1;0.4" dur="9s" repeatCount="indefinite"/>
+    </use>
+    <use href="#particle" x="1100" y="180">
+      <animate attributeName="cy" values="180;60;180" dur="6.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.5;0.3" dur="6.5s" repeatCount="indefinite"/>
+    </use>
+  </g>
+
+  <!-- Main Title -->
+  <text x="600" y="120" font-family="'Fira Code', 'Courier New', monospace" font-size="72" font-weight="bold"
+        fill="url(#textGradient)" text-anchor="middle" filter="url(#subtle-glow)">
+    INSITE LAB
+  </text>
+
+  <!-- Subtitle -->
+  <text x="600" y="170" font-family="'Fira Code', 'Courier New', monospace" font-size="24"
+        fill="#57606a" text-anchor="middle" letter-spacing="8">
+    INNOVATION · TECHNOLOGY · EXCELLENCE
+  </text>
+
+  <!-- Animated Underline -->
+  <line x1="400" y1="190" x2="800" y2="190" stroke="#8250df" stroke-width="2" filter="url(#subtle-glow)">
+    <animate attributeName="x1" values="400;300;400" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="800;900;800" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- Corner Decorations -->
+  <g stroke="#0969da" stroke-width="2" fill="none" filter="url(#subtle-glow)" opacity="0.4">
+    <!-- Top Left -->
+    <path d="M 30 30 L 30 60 M 30 30 L 60 30">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <!-- Top Right -->
+    <path d="M 1170 30 L 1170 60 M 1170 30 L 1140 30">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    </path>
+    <!-- Bottom Left -->
+    <path d="M 30 270 L 30 240 M 30 270 L 60 270">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" begin="1s" repeatCount="indefinite"/>
+    </path>
+    <!-- Bottom Right -->
+    <path d="M 1170 270 L 1170 240 M 1170 270 L 1140 270">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Version Tag -->
+  <text x="1150" y="280" font-family="'Fira Code', monospace" font-size="12"
+        fill="#8c959f" text-anchor="end">
+    v2026.1
+  </text>
+</svg>
